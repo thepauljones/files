@@ -3,10 +3,14 @@ filetype off                  " required
 set autowrite
 "set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
+set nocompatible   " Disable vi-compatibility
+set laststatus=2   " Always show the statusline
+set encoding=utf-8 " Necessary to show Unicode glyphs
+let g:airline#extensions#tabline#enabled = 1
 if exists('loaded_trailing_whitespace_plugin') | finish | endif
 let loaded_trailing_whitespace_plugin = 1
 
@@ -21,12 +25,12 @@ function! ShouldMatchWhitespace()
     return 1
 endfunction
 
-nnoremap <C-F> :call FindAll()<CR>
+nnoremap <S-s> :call FindAll()<CR>
 function! FindAll()
     call inputsave()
     let find_var = input("Search for: ")
     call inputrestore()
-    execute 'vimgrep "' . find_var . '" * | cwindow'
+    execute 'vimgrep "' . find_var . '" **/* | cwindow'
 endfunction
 
 " Highlight EOL whitespace, http://vim.wikia.com/wiki/Highlight_unwanted_spaces
@@ -52,7 +56,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
+let g:Powerline_symbols = 'fancy'
+let g:tabber_divider_style = 'fancy'
+set guifont=/Users/thepauljones/Library/Fonts/Anonymice\ Powerline\ Bold\ Italic.ttf
 call vundle#begin()
 " " alternatively, pass a path where Vundle should install plugins
 " "call vundle#begin('~/some/path/here')
@@ -65,6 +71,8 @@ Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'fweep/vim-tabber'
 " Plugin 'vim-scripts/FuzzyFinder'
 
 " " The following are examples of different formats supported.
