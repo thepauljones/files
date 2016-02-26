@@ -10,14 +10,54 @@ set rtp+=~/.vim/bundle/Vundle.vim
 set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
+set hlsearch
 let g:airline#extensions#tabline#enabled = 1
+
+" Switch between windows properly
+nmap <silent> <C-k> :wincmd k<CR>
+nmap <silent> <C-j> :wincmd j<CR>
+nmap <silent> <C-h> :wincmd h<CR>
+nmap <silent> <C-l> :wincmd l<CR>
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
 if exists('loaded_trailing_whitespace_plugin') | finish | endif
 let loaded_trailing_whitespace_plugin = 1
 
 if !exists('g:extra_whitespace_ignored_filetypes')
     let g:extra_whitespace_ignored_filetypes = []
 endif
+function! NERDTreeQuit()
+  redir => buffersoutput
+  silent buffers
+  redir END
+"                     1BufNo  2Mods.     3File           4LineNo
+  let pattern = '^\s*\(\d\+\)\(.....\) "\(.*\)"\s\+line \(\d\+\)$'
+  let windowfound = 0
 
+  for bline in split(buffersoutput, "\n")
+    let m = matchlist(bline, pattern)
+
+    if (len(m) > 0)
+      if (m[2] =~ '..a..')
+        let windowfound = 1
+      endif
+    endif
+  endfor
+
+  if (!windowfound)
+    quitall
+  endif
+endfunction
+autocmd WinEnter * call NERDTreeQuit()
 function! ShouldMatchWhitespace()
     for ft in g:extra_whitespace_ignored_filetypes
         if ft ==# &filetype | return 0 | endif
@@ -73,6 +113,9 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'fweep/vim-tabber'
+Plugin 'SirVer/ultisnips'
+Bundle 'ervandew/supertab'
+Plugin 'honza/vim-snippets'
 " Plugin 'vim-scripts/FuzzyFinder'
 
 " " The following are examples of different formats supported.
