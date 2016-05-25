@@ -6,13 +6,13 @@ set rtp+=~/.vim/bundle/Vundle.vim
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
-
+"extra comment
 set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
 set hlsearch
 let g:airline#extensions#tabline#enabled = 1
-
+let g:airline_powerline_fonts = 1
 " Switch between windows properly
 nmap <silent> <C-k> :wincmd k<CR>
 nmap <silent> <C-j> :wincmd j<CR>
@@ -107,11 +107,14 @@ call vundle#begin()
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'jdonalson/vaxe'
-Plugin 'scrooloose/syntastic'
+Plugin 'rizzatti/dash.vim'
+"Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-dispatch'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
-Plugin 'Lokaltog/vim-powerline'
+"Plugin 'Lokaltog/vim-powerline'
+Plugin 'bling/vim-airline'
 Plugin 'fweep/vim-tabber'
 Plugin 'SirVer/ultisnips'
 Bundle 'ervandew/supertab'
