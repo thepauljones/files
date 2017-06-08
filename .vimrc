@@ -1,6 +1,8 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 set autowrite
+set clipboard=unnamed
+set backupcopy=yes
 "set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 "set statusline+=%#warningmsg#
@@ -106,10 +108,6 @@ let g:Powerline_symbols = 'fancy'
 let g:tabber_divider_style = 'fancy'
 set guifont=/Users/thepauljones/Library/Fonts/Anonymice\ Powerline\ Bold\ Italic.ttf
 call vundle#begin()
-" " alternatively, pass a path where Vundle should install plugins
-" "call vundle#begin('~/some/path/here')
-"
-" " let Vundle manage Vundle, required
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'jdonalson/vaxe'
@@ -126,6 +124,7 @@ Plugin 'bling/vim-airline'
 Plugin 'mxw/vim-jsx'
 Plugin 'fweep/vim-tabber'
 Plugin 'SirVer/ultisnips'
+Plugin 'letientai299/vim-react-snippets', { 'branch': 'es6' }
 Bundle 'ervandew/supertab'
 Plugin 'honza/vim-snippets'
 " Plugin 'vim-scripts/FuzzyFinder'
