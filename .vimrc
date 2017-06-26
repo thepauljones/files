@@ -103,6 +103,8 @@ function! s:FixWhitespace(line1,line2)
 endfunction
 
 " Run :FixWhitespace to remove end of line white space
+command! -bang -range=% -complete=file -nargs=* W <line1>,<line2>write<bang> <args>
+command! -bang Q quit<bang>
 command! -range=% FixWhitespace call <SID>FixWhitespace(<line1>,<line2>)
 
 let g:Powerline_symbols = 'fancy'
