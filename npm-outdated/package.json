@@ -1,0 +1,25 @@
+{
+  "name": "check-package-versions",
+  "version": "1.0.7",
+  "description": "Checks for package dependencies that have newer versions available",
+  "main": "outdated.js",
+  "bin": {
+    "check-package-versions": "outdated.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "outdated",
+    "package.json",
+    "packages",
+    "dependencies",
+    "organizations"
+  ],
+  "author": "thepauljones",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "shelljs": "^0.7.8"
+  }
+}
