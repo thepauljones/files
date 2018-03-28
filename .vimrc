@@ -1,5 +1,7 @@
 set nocompatible              " be iMproved, required
+set noeb vb t_vb=
 filetype off                  " required
+set shell=/bin/bash
 set autowrite
 set clipboard=unnamed
 set backupcopy=yes
@@ -9,6 +11,13 @@ set rtp+=~/.vim/bundle/Vundle.vim
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
 "extra comment
+let mapleader = ","
+let g:ctrlp_max_files=0
+let g:ctrlp_max_depth=40
+let g:ctrlp_working_path_mode=''
+noremap <leader>s :w<cr>
+noremap <leader>x :wq!<cr>
+
 set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
@@ -24,6 +33,7 @@ nmap <silent> <C-l> :wincmd l<CR>
 
 " Open NERDTree in the directory of the current file (or /home if no file is open)
 nmap <silent> <C-i> :call NERDTreeToggleInCurDir()<cr>
+nmap ,m :NERDTreeFind<CR>
 function! NERDTreeToggleInCurDir()
   " If NERDTree is open in the current buffer
   if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
@@ -33,11 +43,15 @@ function! NERDTreeToggleInCurDir()
   endif
 endfunction
 
+autocmd FileType html,css,js EmmetInstall
+
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
-
+let g:ctrlp_custom_ignore = {
+  \ 'dir': 'node_modules\|DS_Store\|.git'
+  \ }
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
@@ -111,26 +125,36 @@ let g:Powerline_symbols = 'fancy'
 let g:tabber_divider_style = 'fancy'
 set guifont=/Users/thepauljones/Library/Fonts/Anonymice\ Powerline\ Bold\ Italic.ttf
 call vundle#begin()
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'mattn/emmet-vim'
+Plugin 'evidens/vim-twig'
+Plugin 'majutsushi/tagbar'
+Plugin 'elzr/vim-json'
+Plugin 'vim-scripts/taglist.vim'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'rking/ag.vim'
+Plugin 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'pangloss/vim-javascript'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'jdonalson/vaxe'
 Plugin 'rizzatti/dash.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-markdown'
+Plugin 'vimoutliner/vimoutliner'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-surround'
-"Plugin 'Lokaltog/vim-powerline'
 Plugin 'jaxbot/syntastic-react'
 Plugin 'bling/vim-airline'
 Plugin 'mxw/vim-jsx'
-Plugin 'fweep/vim-tabber'
 Plugin 'SirVer/ultisnips'
 Plugin 'letientai299/vim-react-snippets', { 'branch': 'es6' }
-Bundle 'ervandew/supertab'
 Plugin 'honza/vim-snippets'
-" Plugin 'vim-scripts/FuzzyFinder'
+Plugin 'michalliu/jsruntime.vim'
+Plugin 'michalliu/jsoncodecs.vim'
+Plugin 'michalliu/sourcebeautify.vim'
 
 " " The following are examples of different formats supported.
 " " Keep Plugin commands between vundle#begin/end.
@@ -180,6 +204,11 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_javascript_checkers = ['eslint']
+
+" load local eslint in the project root
+" modified from https://github.com/mtscout6/syntastic-local-eslint.vim
+let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
+let g:neomake_javascript_eslint_exe = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
 
 let g:syntastic_error_symbol = '❌'
 let g:syntastic_style_error_symbol = '⁉️'
