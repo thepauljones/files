@@ -136,7 +136,6 @@ Plugin 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'jdonalson/vaxe'
 Plugin 'rizzatti/dash.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-dispatch'
