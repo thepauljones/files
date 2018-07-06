@@ -17,7 +17,7 @@ let g:ctrlp_max_depth=40
 let g:ctrlp_working_path_mode=''
 noremap <leader>s :w<cr>
 noremap <leader>x :wq!<cr>
-
+let g:NERDTreeWinSize=60
 set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
@@ -30,6 +30,10 @@ nmap <silent> <C-k> :wincmd k<CR>
 nmap <silent> <C-j> :wincmd j<CR>
 nmap <silent> <C-h> :wincmd h<CR>
 nmap <silent> <C-l> :wincmd l<CR>
+
+nnoremap <silent> <Leader>f :call fzf#run({
+\   'down': '40%',
+\   'sink': 'botright split' })<CR>
 
 " Open NERDTree in the directory of the current file (or /home if no file is open)
 nmap <silent> <C-i> :call NERDTreeToggleInCurDir()<cr>
@@ -126,18 +130,21 @@ let g:tabber_divider_style = 'fancy'
 set guifont=/Users/thepauljones/Library/Fonts/Anonymice\ Powerline\ Bold\ Italic.ttf
 call vundle#begin()
 Plugin 'mattn/emmet-vim'
+Plugin 'nelsyeung/twig.vim'
 Plugin 'evidens/vim-twig'
 Plugin 'majutsushi/tagbar'
 Plugin 'elzr/vim-json'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plugin 'junegunn/fzf.vim'
 Plugin 'rking/ag.vim'
 Plugin 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'rizzatti/dash.vim'
-Plugin 'scrooloose/syntastic'
+Plugin 'w0rp/ale'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-markdown'
 Plugin 'vimoutliner/vimoutliner'
@@ -145,7 +152,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-surround'
-Plugin 'jaxbot/syntastic-react'
 Plugin 'bling/vim-airline'
 Plugin 'mxw/vim-jsx'
 Plugin 'SirVer/ultisnips'
@@ -202,17 +208,20 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['eslint']
-
-" load local eslint in the project root
-" modified from https://github.com/mtscout6/syntastic-local-eslint.vim
-let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
-let g:neomake_javascript_eslint_exe = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
-
 let g:syntastic_error_symbol = '❌'
 let g:syntastic_style_error_symbol = '⁉️'
 let g:syntastic_warning_symbol = '⚠️'
 let g:syntastic_style_warning_symbol = '💩'
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = 'npm run lint --'
 
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
